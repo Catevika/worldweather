@@ -1,35 +1,19 @@
+import {getWeather} from '@/api';
+import UpArrow from '@/assets/uparrow.svg?react';
+import Card from '@/components/cards/Card';
+import {rows} from '@/constants';
+import type {Coords} from '@/types/types';
 import {useSuspenseQuery} from '@tanstack/react-query';
-import {getWeather} from '../../api';
-import {rows} from '../../constants';
-import Card from './Card';
-import UpArrow from '/src/assets/uparrow.svg?react';
 
-type Props = {};
+type Props = {
+	coords: Coords;
+};
 
-export default function AdditionalInfo({}: Props) {
+export default function AdditionalInfo({coords}: Props) {
 	const {data} = useSuspenseQuery({
-		queryKey: ['weather'],
-		queryFn: () => getWeather({lat: 50, lon: 50}),
+		queryKey: ['weather', coords],
+		queryFn: () => getWeather({lat: coords.lat, lon: coords.lon}),
 	});
-
-	function FormatComponent({value, number}: {value: string; number: number}) {
-		if (value === 'sunrise' || value === 'sunset')
-			return new Date(number * 1000).toLocaleTimeString(undefined, {
-				hour: 'numeric',
-				minute: '2-digit',
-				hour12: true,
-			});
-
-		if (value === 'wind_deg')
-			return (
-				<UpArrow
-					style={{transform: `rotate(${number}deg)`}}
-					className='size-8 invert'
-				/>
-			);
-
-		return number;
-	}
 
 	return (
 		<Card
@@ -53,4 +37,23 @@ export default function AdditionalInfo({}: Props) {
 			))}
 		</Card>
 	);
+}
+
+function FormatComponent({value, number}: {value: string; number: number}) {
+	if (value === 'sunrise' || value === 'sunset')
+		return new Date(number * 1000).toLocaleTimeString(undefined, {
+			hour: 'numeric',
+			minute: '2-digit',
+			hour12: true,
+		});
+
+	if (value === 'wind_deg')
+		return (
+			<UpArrow
+				style={{transform: `rotate(${number}deg)`}}
+				className='size-8 invert'
+			/>
+		);
+
+	return number;
 }

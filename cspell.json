@@ -1,0 +1,15 @@
+{
+	"ignorePaths": [
+		"node_modules",
+		"dist",
+		"build",
+		"public",
+		"package-lock.json",
+		"/src/index.css"
+	],
+	"words": [
+		"MAPTILE",
+		"Maptiler",
+		"maptilersdk"
+	]
+}
