@@ -6,10 +6,14 @@ import HourlyForecast from '@/components/cards/HourlyForecast';
 import LocationDropdown from '@/components/dropdowns/LocationDropdown';
 import MapTypeDropdown from '@/components/dropdowns/MapTypeDropdown';
 import Map from '@/components/Map';
+import MapLegend from '@/components/MapLegend';
+import AdditionalInfoSkeleton from '@/components/skeletons/AdditionalInfoSkeleton';
+import CurrentSkeleton from '@/components/skeletons/CurrentSkeleton';
+import DailySkeleton from '@/components/skeletons/DailySkeleton';
+import HourlySkeleton from '@/components/skeletons/HourlySkeleton';
 import type {Coords} from '@/types/types';
 import {useQuery} from '@tanstack/react-query';
-import {useState} from 'react';
-import MapLegend from './components/MapLegend';
+import {Suspense, useState} from 'react';
 
 function App() {
 	const [coordinates, setCoords] = useState<Coords>({lat: 5, lon: 10});
@@ -33,7 +37,7 @@ function App() {
 
 	return (
 		<div className='flex flex-col gap-8'>
-			<h1 className='text-6xl font-semibold text-center'>Your Weather</h1>
+			<h1 className='text-6xl font-semibold text-center'>World Weather</h1>
 			<div className='flex gap-8 justify-center'>
 				<div className='flex gap-4'>
 					<h2 className='text-2xl font-semibold'>Location</h2>
@@ -58,10 +62,18 @@ function App() {
 				/>
 				<MapLegend mapType={mapType} />
 			</div>
-			<CurrentWeather coords={coords} />
-			<HourlyForecast coords={coords} />
-			<DailyForecast coords={coords} />
-			<AdditionalInfo coords={coords} />
+			<Suspense fallback={<CurrentSkeleton />}>
+				<CurrentWeather coords={coords} />
+			</Suspense>
+			<Suspense fallback={<HourlySkeleton />}>
+				<HourlyForecast coords={coords} />
+			</Suspense>
+			<Suspense fallback={<DailySkeleton />}>
+				<DailyForecast coords={coords} />
+			</Suspense>
+			<Suspense fallback={<AdditionalInfoSkeleton />}>
+				<AdditionalInfo coords={coords} />
+			</Suspense>
 		</div>
 	);
 }
