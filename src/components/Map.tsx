@@ -1,9 +1,9 @@
+import type {Coords} from '@/types/types';
 import {MaptilerLayer} from '@maptiler/leaflet-maptilersdk';
-import {MapContainer, Marker, TileLayer, useMap} from 'react-leaflet';
-
+import * as L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import {useEffect} from 'react';
-import type {Coords} from '../types/types';
+import {MapContainer, Marker, TileLayer, useMap} from 'react-leaflet';
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 const MAPTILE_API_KEY = import.meta.env.VITE_MAPTILE_API_KEY;
@@ -48,12 +48,22 @@ function MapClick({
 	coords: Coords;
 }) {
 	const map = useMap();
-	map.panTo([coords.lat, coords.lon]);
 
-	map.on('click', (e) => {
-		const {lat, lng} = e.latlng;
-		onMapClick(lat, lng);
-	});
+	useEffect(() => {
+		map.panTo([coords.lat, coords.lon]);
+	}, [map, coords.lat, coords.lon]);
+
+	useEffect(() => {
+		const handler = (e: any) => {
+			const {lat, lng} = e.latlng;
+			onMapClick(lat, lng);
+		};
+
+		map.on('click', handler);
+		return () => {
+			map.off('click', handler);
+		};
+	}, [map, onMapClick]);
 
 	return null;
 }
@@ -62,14 +72,60 @@ function MapTileLayer() {
 	const map = useMap();
 
 	useEffect(() => {
-		const tileLayer = new MaptilerLayer({
-			style: 'basic-dark',
-			apiKey: MAPTILE_API_KEY,
-		});
+		let activeLayer: any | null = null;
+		const controller = new AbortController();
 
-		tileLayer.addTo(map);
+		// If no MapTiler API key is provided, fall back to OpenStreetMap tiles
+		if (!MAPTILE_API_KEY) {
+			const osm = new L.TileLayer(
+				'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+				{
+					attribution: '© OpenStreetMap contributors',
+				},
+			);
+			osm.addTo(map);
+			activeLayer = osm;
+			return () => {
+				map.removeLayer(osm);
+			};
+		}
+
+		const styleUrl = `https://api.maptiler.com/maps/basic-dark/style.json?key=${MAPTILE_API_KEY}`;
+
+		(async () => {
+			try {
+				const resp = await fetch(styleUrl, {signal: controller.signal});
+				if (!resp.ok) throw new Error(`Style fetch failed: ${resp.status}`);
+				const styleJson = await resp.json();
+				// Pass a full StyleSpecification object to MaptilerLayer to avoid setStyle URL problems.
+				const tileLayer = new MaptilerLayer({
+					style: styleJson,
+					apiKey: MAPTILE_API_KEY,
+				});
+				tileLayer.addTo(map);
+				activeLayer = tileLayer;
+			} catch (err: any) {
+				if (err.name === 'AbortError') return;
+				console.warn(
+					'MapTiler style load failed, falling back to OpenStreetMap tiles',
+					err,
+				);
+				const osm = new L.TileLayer(
+					'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+					{
+						attribution: '© OpenStreetMap contributors',
+					},
+				);
+				osm.addTo(map);
+				activeLayer = osm;
+			}
+		})();
+
 		return () => {
-			map.removeLayer(tileLayer);
+			controller.abort();
+			if (activeLayer) {
+				map.removeLayer(activeLayer);
+			}
 		};
 	}, [map]);
 
