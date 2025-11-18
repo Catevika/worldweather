@@ -1,15 +1,15 @@
-import {getAirPollution} from '@/api';
+import { getAirPollution } from '@/api';
 import Chevron from '@/assets/ChevronLeft.svg?react';
 import Information from '@/assets/information.svg?react';
 import Card from '@/components/cards/Card';
 import SidePanelSkeleton from '@/components/skeletons/SidePanelSkeleton';
-import {Slider} from '@/components/ui/slider';
-import {Tooltip, TooltipContent, TooltipTrigger} from '@/components/ui/tooltip';
-import {airQualityRanges, pollutantNameMapping} from '@/constants';
-import type {Coords, Pollutant} from '@/types/types';
-import {useSuspenseQuery} from '@tanstack/react-query';
+import { Slider } from '@/components/ui/slider';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { airQualityRanges, pollutantNameMapping } from '@/constants';
+import type { Coords, Pollutant } from '@/types/types';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import clsx from 'clsx';
-import {Suspense} from 'react';
+import { Suspense } from 'react';
 
 type Props = {
 	coords: Coords;
@@ -29,7 +29,7 @@ export default function SidePanel({
 				isSidePanelOpen ? 'translate-x-0' : 'translate-x-full',
 			)}>
 			<button onClick={() => setIsSidePanelOpen(false)}>
-				<Chevron className='size-8 invert -ml-2 lg:hidden' />
+				<Chevron className='size-8 -ml-2 lg:hidden' />
 			</button>
 			<Suspense fallback={<SidePanelSkeleton />}>
 				<AirPollution
@@ -42,8 +42,8 @@ export default function SidePanel({
 	);
 }
 
-function AirPollution({coords}: Props) {
-	const {data} = useSuspenseQuery({
+function AirPollution({ coords }: Props) {
+	const { data } = useSuspenseQuery({
 		queryKey: ['pollution', coords],
 		queryFn: () => getAirPollution(coords),
 	});
@@ -58,7 +58,7 @@ function AirPollution({coords}: Props) {
 				<div className='flex items-center gap-2'>
 					<Tooltip>
 						<TooltipTrigger>
-							<Information className='size-7 invert cursor-pointer mt-1 ml-2' />
+							<Information className='size-7 cursor-pointer mt-1 ml-2' />
 						</TooltipTrigger>
 						<TooltipContent className='z-2000'>
 							<div className='max-w-xs text-lg'>
@@ -121,7 +121,7 @@ function AirPollution({coords}: Props) {
 								<span className='text-lg font-bold capitalize'>{key}</span>
 								<Tooltip>
 									<TooltipTrigger>
-										<Information className='size-5 invert cursor-pointer mt-1 ml-2' />
+										<Information className='size-5 cursor-pointer mt-1 ml-2' />
 									</TooltipTrigger>
 									<TooltipContent className='z-2000'>
 										<p className='max-w-xs text-lg'>
@@ -147,15 +147,13 @@ function AirPollution({coords}: Props) {
 							{Object.keys(pollutant).map((quality) => (
 								<span
 									key={quality}
-									className={
-										(clsx('px-2 py-1 rounded-md text-xs font-medium'),
+									className={clsx(
+										"px-2 py-1 rounded-md text-xs font-medium",
 										quality === currentLevel
-											? clsx(
-													qualityColor,
-													'text-zinc-900 font-semibold py-0.5 px-1.5 rounded-md',
-											  )
-											: 'bg-muted text-muted-foreground')
-									}>
+											? qualityColor
+											: "bg-muted text-muted-foreground"
+									)}
+								>
 									{quality}
 								</span>
 							))}

@@ -1,31 +1,31 @@
-import {getWeather} from '@/api';
+import { getWeather } from '@/api';
 import UpArrow from '@/assets/uparrow.svg?react';
 import Card from '@/components/cards/Card';
-import {rows} from '@/constants';
-import type {Coords} from '@/types/types';
-import {useSuspenseQuery} from '@tanstack/react-query';
+import { rows } from '@/constants';
+import type { Coords } from '@/types/types';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 type Props = {
 	coords: Coords;
 };
 
-export default function AdditionalInfo({coords}: Props) {
-	const {data} = useSuspenseQuery({
+export default function AdditionalInfo({ coords }: Props) {
+	const { data } = useSuspenseQuery({
 		queryKey: ['weather', coords],
-		queryFn: () => getWeather({lat: coords.lat, lon: coords.lon}),
+		queryFn: () => getWeather({ lat: coords.lat, lon: coords.lon }),
 	});
 
 	return (
 		<Card
-			title='Additional infos'
-			childrenClassName='flex flex-col gap-8'>
-			{rows.map(({label, value, Icon}) => (
+			title='Additional Weather Info'
+			childrenClassName='grid grid-cols-1 md:grid-cols-2 gap-8'>
+			{rows.map(({ label, value, Icon }) => (
 				<div
-					className='flex justify-between'
+					className='flex justify-between items-center'
 					key={value}>
-					<div className='flex items-center'>
+					<div className='flex gap-4'>
+						<Icon className='size-8' />
 						<span className='text-gray-500'>{label}</span>
-						<Icon className='ml-2 size-8 invert' />
 					</div>
 					<span>
 						<FormatComponent
@@ -39,7 +39,7 @@ export default function AdditionalInfo({coords}: Props) {
 	);
 }
 
-function FormatComponent({value, number}: {value: string; number: number}) {
+function FormatComponent({ value, number }: { value: string; number: number; }) {
 	if (value === 'sunrise' || value === 'sunset')
 		return new Date(number * 1000).toLocaleTimeString(undefined, {
 			hour: 'numeric',
@@ -50,8 +50,8 @@ function FormatComponent({value, number}: {value: string; number: number}) {
 	if (value === 'wind_deg')
 		return (
 			<UpArrow
-				style={{transform: `rotate(${number}deg)`}}
-				className='size-8 invert'
+				style={{ transform: `rotate(${number}deg)` }}
+				className='size-8'
 			/>
 		);
 

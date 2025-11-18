@@ -1,7 +1,7 @@
 import * as SliderPrimitive from '@radix-ui/react-slider';
 import * as React from 'react';
 
-import {cn} from '@/lib/utils';
+import { cn } from '@/lib/utils';
 
 function Slider({
 	className,
@@ -16,8 +16,8 @@ function Slider({
 			Array.isArray(value)
 				? value
 				: Array.isArray(defaultValue)
-				? defaultValue
-				: [min, max],
+					? defaultValue
+					: [min, max],
 		[value, defaultValue, min, max],
 	);
 
@@ -36,7 +36,7 @@ function Slider({
 			<SliderPrimitive.Track
 				data-slot='slider-track'
 				className={cn(
-					'bg-sidebar relative grow overflow-hidden rounded-full data-[orientation=horizontal]:h-1.5 data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-1.5',
+					'bg-foreground/25 dark:bg-sidebar relative grow overflow-hidden rounded-full data-[orientation=horizontal]:h-1.5 data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-1.5',
 				)}>
 				<SliderPrimitive.Range
 					data-slot='slider-range'
@@ -45,7 +45,7 @@ function Slider({
 					)}
 				/>
 			</SliderPrimitive.Track>
-			{Array.from({length: _values.length}, (_, index) => (
+			{Array.from({ length: _values.length }, (_, index) => (
 				<SliderPrimitive.Thumb
 					data-slot='slider-thumb'
 					key={index}
@@ -56,4 +56,4 @@ function Slider({
 	);
 }
 
-export {Slider};
+export { Slider };

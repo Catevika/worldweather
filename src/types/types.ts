@@ -11,7 +11,7 @@ export type ColorStop = {
 
 export type MapTypeData = Record<
 	string,
-	{title: string; unit: string; stops: ColorStop[]}
+	{ title: string; unit: string; stops: ColorStop[]; }
 >;
 
 export type AirQualityLevel =
@@ -42,3 +42,10 @@ export type AirQualityRanges = Record<
 >;
 
 export type PollutantNameMapping = Record<Pollutant, string>;
+
+export type Theme = 'light' | 'dark';
+
+export type ThemeContext = {
+	theme: Theme;
+	toggleTheme: () => void;
+};

@@ -1,23 +1,24 @@
-import {getWeather} from '@/api';
+import { getWeather } from '@/api';
 import Card from '@/components/cards/Card';
 import WeatherIcon from '@/components/WeatherIcon';
-import type {Coords} from '@/types/types';
-import {useSuspenseQuery} from '@tanstack/react-query';
+import type { Coords } from '@/types/types';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 type Props = {
 	coords: Coords;
 };
 
-export default function CurrentWeather({coords}: Props) {
-	const {data} = useSuspenseQuery({
+export default function CurrentWeather({ coords }: Props) {
+	const { data } = useSuspenseQuery({
 		queryKey: ['weather', coords],
-		queryFn: () => getWeather({lat: coords.lat, lon: coords.lon}),
+		queryFn: () => getWeather({ lat: coords.lat, lon: coords.lon }),
 	});
 
 	return (
 		<Card
 			title='Current weather'
-			childrenClassName='flex flex-col items-center gap-4'>
+			className='md:pb-11'
+			childrenClassName='flex flex-col items-center gap-6  2xl:justify-between'>
 			<>
 				<div className='flex flex-col gap-2 items-center'>
 					<h2 className='text-6xl font-semibold text-center'>

@@ -1,9 +1,9 @@
-import type {Coords} from '@/types/types';
-import {MaptilerLayer} from '@maptiler/leaflet-maptilersdk';
+import type { Coords } from '@/types/types';
+import { MaptilerLayer } from '@maptiler/leaflet-maptilersdk';
 import * as L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import {useEffect} from 'react';
-import {MapContainer, Marker, TileLayer, useMap} from 'react-leaflet';
+import { useEffect } from 'react';
+import { MapContainer, Marker, TileLayer, useMap } from 'react-leaflet';
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 const MAPTILE_API_KEY = import.meta.env.VITE_MAPTILE_API_KEY;
@@ -14,16 +14,16 @@ type Props = {
 	mapType: string;
 };
 
-export default function Map({coords, onMapClick, mapType}: Props) {
-	const {lat, lon} = coords;
+export default function Map({ coords, onMapClick, mapType }: Props) {
+	const { lat, lon } = coords;
 
 	return (
 		<MapContainer
 			center={[lat, lon]}
 			zoom={5}
 			style={{
-				width: '1000px',
-				height: '500px',
+				width: '100%',
+				height: '100%',
 				margin: '0 auto',
 			}}>
 			<MapClick
@@ -55,7 +55,7 @@ function MapClick({
 
 	useEffect(() => {
 		const handler = (e: any) => {
-			const {lat, lng} = e.latlng;
+			const { lat, lng } = e.latlng;
 			onMapClick(lat, lng);
 		};
 
@@ -94,7 +94,7 @@ function MapTileLayer() {
 
 		(async () => {
 			try {
-				const resp = await fetch(styleUrl, {signal: controller.signal});
+				const resp = await fetch(styleUrl, { signal: controller.signal });
 				if (!resp.ok) throw new Error(`Style fetch failed: ${resp.status}`);
 				const styleJson = await resp.json();
 				// Pass a full StyleSpecification object to MaptilerLayer to avoid setStyle URL problems.

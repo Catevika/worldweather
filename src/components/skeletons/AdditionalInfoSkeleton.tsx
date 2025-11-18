@@ -1,14 +1,14 @@
 import Card from '@/components/cards/Card';
-import {Skeleton} from '@/components/ui/skeleton';
+import { Skeleton } from '@/components/ui/skeleton';
 
 type Props = {};
 
-export default function AdditionalInfoSkeleton({}: Props) {
+export default function AdditionalInfoSkeleton({ }: Props) {
 	return (
 		<Card
 			title='Additional infos'
-			childrenClassName='flex flex-col gap-8'>
-			{Array.from({length: 6}).map((_, index) => (
+			childrenClassName='grid grid-cols-1 md:grid-cols-2 gap-8'>
+			{Array.from({ length: 6 }).map((_, index) => (
 				<div
 					className='flex justify-between'
 					key={index}>
