@@ -34,7 +34,6 @@ export default function Map({ coords, onMapClick, mapType }: Props) {
 			style={{
 				width: '100%',
 				height: '100%',
-				margin: '0 auto',
 			}}>
 			<MapClick
 				onMapClick={onMapClick}
