@@ -39,7 +39,9 @@ export default function AdditionalInfo({ coords }: Props) {
 	);
 }
 
-function FormatComponent({ value, number }: { value: string; number: number; }) {
+function FormatComponent({ value, number }: { value: string; number: number | undefined; }) {
+	if (!number && number !== 0) return 'N/A';
+
 	if (value === 'sunrise' || value === 'sunset')
 		return new Date(number * 1000).toLocaleTimeString(undefined, {
 			hour: 'numeric',
