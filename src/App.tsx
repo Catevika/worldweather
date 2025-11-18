@@ -5,16 +5,17 @@ import DailyForecast from '@/components/cards/DailyForecast';
 import HourlyForecast from '@/components/cards/HourlyForecast';
 import LocationDropdown from '@/components/dropdowns/LocationDropdown';
 import MapTypeDropdown from '@/components/dropdowns/MapTypeDropdown';
-import Map from '@/components/Map';
 import MapLegend from '@/components/MapLegend';
-import SidePanel from '@/components/SidePanel';
+import { lazy, Suspense, useState } from 'react';
+const Map = lazy(() => import('@/components/Map'));
+const SidePanel = lazy(() => import('@/components/SidePanel'));
 import AdditionalInfoSkeleton from '@/components/skeletons/AdditionalInfoSkeleton';
 import CurrentSkeleton from '@/components/skeletons/CurrentSkeleton';
 import DailySkeleton from '@/components/skeletons/DailySkeleton';
 import HourlySkeleton from '@/components/skeletons/HourlySkeleton';
 import type { Coords } from '@/types/types';
 import { useQuery } from '@tanstack/react-query';
-import { Suspense, useState } from 'react';
+// (lazy + Suspense imported above)
 import MobileHeader from '@/components/MobileHeader';
 import Hamburger from '@/assets/hamburger.svg?react';
 import LightDarkToggle from '@/components/LightDarkToggle';
@@ -70,12 +71,10 @@ function App() {
 				</div>
 				<div className="grid grid-cols-1 2xl:flex-1 2xl:min-h-0 md:grid-cols-2 2xl:grid-cols-4 2xl:grid-rows-4 gap-4">
 					<div className="relative h-120 2xl:h-auto col-span-1 md:col-span-2 2xl:col-span-4 2xl:row-span-2 order-1">
-						<Map
-							coords={coords}
-							onMapClick={onMapClick}
-							mapType={mapType}
-						/>
-						<MapLegend mapType={mapType} />
+						<Suspense fallback={<div className='h-full w-full bg-background' />}>
+							<Map coords={coords} onMapClick={onMapClick} mapType={mapType} />
+							<MapLegend mapType={mapType} />
+						</Suspense>
 					</div>
 					<div className='col-span-1 2xl:row-span-2 order-2'>
 						<Suspense fallback={<CurrentSkeleton />}>
@@ -99,11 +98,13 @@ function App() {
 					</div>
 				</div>
 			</div>
-			<SidePanel
-				coords={coords}
-				isSidePanelOpen={isSidePanelOpen}
-				setIsSidePanelOpen={setIsSidePanelOpen}
-			/>
+			<Suspense fallback={null}>
+				<SidePanel
+					coords={coords}
+					isSidePanelOpen={isSidePanelOpen}
+					setIsSidePanelOpen={setIsSidePanelOpen}
+				/>
+			</Suspense>
 		</>
 	);
 }

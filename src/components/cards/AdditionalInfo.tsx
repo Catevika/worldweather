@@ -30,7 +30,7 @@ export default function AdditionalInfo({ coords }: Props) {
 					<span>
 						<FormatComponent
 							value={value}
-							number={data?.current[value]}
+							number={data && data.current ? (data.current as any)[value] : undefined}
 						/>
 					</span>
 				</div>

@@ -23,14 +23,12 @@ export default function DailyForecast({ coords }: Props) {
 					key={day.dt}
 					className='flex justify-between'>
 					<p className='w-9'>
-						{new Date(day.dt * 1000).toLocaleDateString(undefined, {
-							weekday: 'short',
-						})}
+						{day?.dt ? new Date(day.dt * 1000).toLocaleDateString(undefined, { weekday: 'short' }) : '—'}
 					</p>
-					<WeatherIcon src={day.weather[0].icon} />
-					<p>{Math.round(day.temp.day)}°C</p>
-					<p className='text-gray-500/75'>{Math.round(day.temp.min)}°C</p>
-					<p className='text-gray-500/75'>{Math.round(day.temp.max)}°C</p>
+					<WeatherIcon src={day?.weather?.[0]?.icon} />
+					<p>{day?.temp?.day != null ? `${Math.round(day.temp.day)}°C` : '—'}</p>
+					<p className='text-gray-500/75'>{day?.temp?.min != null ? `${Math.round(day.temp.min)}°C` : '—'}</p>
+					<p className='text-gray-500/75'>{day?.temp?.max != null ? `${Math.round(day.temp.max)}°C` : '—'}</p>
 				</div>
 			))}
 		</Card>

@@ -23,14 +23,10 @@ export default function HourlyForecast({ coords }: Props) {
 					className='flex flex-col 2xl:justify-between items-center gap-2 p-2'
 					key={hour.dt}>
 					<p className='whitespace-nowrap 2xl:scale-110'>
-						{new Date(hour.dt * 1000).toLocaleTimeString(undefined, {
-							hour: 'numeric',
-							minute: '2-digit',
-							hour12: true,
-						})}
+						{hour?.dt ? new Date(hour.dt * 1000).toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit', hour12: true }) : '—'}
 					</p>
-					<WeatherIcon src={hour.weather[0].icon} className='2xl:size-10' />
-					<p className="2xl:scale-110">{Math.round(hour.temp)}°C</p>
+					<WeatherIcon src={hour?.weather?.[0]?.icon} className='2xl:size-10' />
+					<p className="2xl:scale-110">{hour?.temp != null ? `${Math.round(hour.temp)}°C` : '—'}</p>
 				</div>
 			))}
 		</Card>
