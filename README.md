@@ -1,73 +1,160 @@
-# React + TypeScript + Vite
+# World Weather
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive weather application built with React, TypeScript, and Vite. Get real-time weather information, hourly forecasts, daily forecasts, and air quality data with an interactive map interface.
 
-Currently, two official plugins are available:
+## Table of Contents
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [World Weather](#world-weather)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+  - [Demo](#demo)
+  - [Tech Stack](#tech-stack)
+  - [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Installation](#installation)
+    - [Environment Setup](#environment-setup)
+    - [Running the App](#running-the-app)
+  - [Available Scripts](#available-scripts)
+  - [Components](#components)
+    - [Weather Cards](#weather-cards)
+    - [UI Components](#ui-components)
+    - [Loading States](#loading-states)
+  - [API Integration](#api-integration)
+  - [Contributing](#contributing)
+  - [Credits](#credits)
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- 🌍 **Global Weather Search** - Search weather information for any location worldwide
+- 📍 **Current Weather Display** - Real-time temperature, humidity, wind speed, and conditions
+- 📊 **Hourly Forecast** - Detailed hourly weather predictions
+- 📅 **Daily Forecast** - 7-day weather outlook with high/low temperatures
+- 🗺️ **Interactive Map** - Multiple map types (satellite, terrain, light, dark) with weather layer visualization
+- 💨 **Air Quality Index** - Monitor air pollution levels (PM2.5, NO₂, etc.)
+- 🌙 **Dark/Light Mode** - Toggle between dark and light themes
+- 📱 **Responsive Design** - Optimized for desktop, tablet, and mobile devices
+- ⚡ **Skeleton Loading** - Smooth loading states for better UX
+- 🎨 **Modern UI** - Built with Tailwind CSS and Radix UI components
 
-## Expanding the ESLint configuration
+## Demo
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Live demo available at [your-deployment-url]
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Tech Stack
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- **Frontend Framework:** React 19
+- **Language:** TypeScript 5.9
+- **Build Tool:** Vite 7.2
+- **Styling:** Tailwind CSS 4
+- **UI Components:** shadcn UI
+- **State Management:** TanStack React Query (React Query)
+- **Maps:** Leaflet + MapTiler
+- **Icons:** Lucide React
+- **Data Validation:** Zod
+- **Linting:** ESLint
+- **Package Manager:** npm
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v18 or higher)
+- npm or yarn package manager
+- OpenWeatherMap API key (free tier available)
+
+### Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/Catevika/worldweather.git
+cd worldweather
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. Install dependencies:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
+
+### Environment Setup
+
+1. Create a `.env.local` file in the root directory:
+
+```bash
+cp .env.example .env.local
+```
+
+2. Add your API credentials:
+
+```env
+VITE_API_KEY=your_openweathermap_api_key
+```
+
+Get your free API key from [OpenWeatherMap](https://openweathermap.org/api/one-call-3)
+
+### Running the App
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+The app will open at `http://localhost:5173`
+
+## Available Scripts
+
+```bash
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build locally
+npm run preview
+
+# Run ESLint
+npm run lint
+```
+
+## Components
+
+### Weather Cards
+
+- **CurrentWeather** - Displays current temperature and conditions
+- **HourlyForecast** - Hourly predictions with interactive timeline
+- **DailyForecast** - 7-day forecast with high/low temperatures
+- **AdditionalInfo** - Detailed metrics (humidity, wind, pressure, etc.)
+
+### UI Components
+
+- **Map** - Interactive leaflet map with weather visualization
+- **MapLegend** - Legend for map data
+- **LocationDropdown** - Location search and selection
+- **MapTypeDropdown** - Map style selector
+- **LightDarkToggle** - Theme switcher
+
+### Loading States
+
+- Skeleton components for smooth loading animations
+- React Query integration for automatic caching and refetching
+
+## API Integration
+
+The app uses the OpenWeatherMap API endpoints:
+
+- **Current Weather & Forecast:** One Call API 3.0
+- **Geocoding:** Geolocation API for location search
+- **Air Pollution:** Air Pollution API
+
+All API calls are wrapped with Zod schema validation for type safety.
+
+## Contributing
+
+Contributions are welcome! Feel free to submit issues and enhancement requests.
+
+## Credits
+
+This project has been created by [AustinDavisTech](https://github.com/AustinDavisTech/WeatherApp). You can find the respective tutorial on [Youtube](https://youtu.be/M-iV9R3kLNA)

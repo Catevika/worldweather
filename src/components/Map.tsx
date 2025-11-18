@@ -4,9 +4,19 @@ import * as L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect } from 'react';
 import { MapContainer, Marker, TileLayer, useMap } from 'react-leaflet';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 const MAPTILE_API_KEY = import.meta.env.VITE_MAPTILE_API_KEY;
+
+
+L.Icon.Default.mergeOptions({
+	iconUrl: markerIcon,
+	iconRetinaUrl: markerIcon,
+	shadowUrl: markerShadow,
+});
+
 
 type Props = {
 	coords: Coords;

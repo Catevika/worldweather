@@ -8,8 +8,11 @@
 		"/src/index.css"
 	],
 	"words": [
+		"Geolocation",
 		"MAPTILE",
 		"Maptiler",
-		"maptilersdk"
+		"maptilersdk",
+		"openweathermap",
+		"shadcn"
 	]
 }
