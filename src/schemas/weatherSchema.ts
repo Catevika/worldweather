@@ -1,4 +1,4 @@
-import {z} from 'zod';
+import { z } from 'zod';
 
 const weatherSchema = z.object({
 	lat: z.number(),
@@ -13,10 +13,10 @@ const weatherSchema = z.object({
 		feels_like: z.number(),
 		pressure: z.number(),
 		humidity: z.number(),
-		dew_point: z.number(),
-		uvi: z.number(),
+		dew_point: z.number().optional(),
+		uvi: z.number().optional(),
 		clouds: z.number(),
-		visibility: z.number(),
+		visibility: z.number().optional(),
 		wind_speed: z.number(),
 		wind_deg: z.number(),
 		wind_gust: z.number().optional(),
@@ -37,13 +37,13 @@ const weatherSchema = z.object({
 				feels_like: z.number(),
 				pressure: z.number(),
 				humidity: z.number(),
-				dew_point: z.number(),
-				uvi: z.number(),
+				dew_point: z.number().optional(),
+				uvi: z.number().optional(),
 				clouds: z.number(),
-				visibility: z.number(),
+				visibility: z.number().optional(),
 				wind_speed: z.number(),
 				wind_deg: z.number(),
-				wind_gust: z.number(),
+				wind_gust: z.number().optional(),
 				weather: z.array(
 					z.object({
 						id: z.number(),
@@ -52,7 +52,7 @@ const weatherSchema = z.object({
 						icon: z.string(),
 					}),
 				),
-				pop: z.number(),
+				pop: z.number().optional(),
 			}),
 		)
 		.optional(),
@@ -62,10 +62,10 @@ const weatherSchema = z.object({
 				dt: z.number(),
 				sunrise: z.number(),
 				sunset: z.number(),
-				moonrise: z.number(),
-				moonset: z.number(),
+				moonrise: z.number().optional(),
+				moonset: z.number().optional(),
 				moon_phase: z.number(),
-				summary: z.string(),
+				summary: z.string().optional(),
 				temp: z.object({
 					day: z.number(),
 					min: z.number(),
@@ -82,10 +82,10 @@ const weatherSchema = z.object({
 				}),
 				pressure: z.number(),
 				humidity: z.number(),
-				dew_point: z.number(),
+				dew_point: z.number().optional(),
 				wind_speed: z.number(),
 				wind_deg: z.number(),
-				wind_gust: z.number(),
+				wind_gust: z.number().optional(),
 				weather: z.array(
 					z.object({
 						id: z.number(),
@@ -95,9 +95,9 @@ const weatherSchema = z.object({
 					}),
 				),
 				clouds: z.number(),
-				pop: z.number(),
+				pop: z.number().optional(),
 				rain: z.number().optional(),
-				uvi: z.number(),
+				uvi: z.number().optional(),
 			}),
 		)
 		.optional(),
