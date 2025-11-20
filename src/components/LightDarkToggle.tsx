@@ -3,9 +3,7 @@ import Sun from '@/assets/sun.svg?react';
 import Moon from '@/assets/moon.svg?react';
 import { useTheme } from "@/provider";
 
-type Props = {};
-
-export default function LightDarkToggle({ }: Props) {
+export default function LightDarkToggle() {
   const { theme, toggleTheme } = useTheme();
   return <div className='flex items-center gap-2'>
     <Sun className='size-5' />

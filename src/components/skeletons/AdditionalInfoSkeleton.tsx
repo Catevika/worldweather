@@ -1,9 +1,7 @@
 import Card from '@/components/cards/Card';
 import { Skeleton } from '@/components/ui/skeleton';
 
-type Props = {};
-
-export default function AdditionalInfoSkeleton({ }: Props) {
+export default function AdditionalInfoSkeleton() {
 	return (
 		<Card
 			title='Additional infos'
