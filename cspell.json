@@ -13,6 +13,7 @@
 		"Maptiler",
 		"maptilersdk",
 		"openweathermap",
-		"shadcn"
+		"shadcn",
+		"worldweather"
 	]
 }
