@@ -6,10 +6,10 @@ import { useEffect } from 'react';
 import { MapContainer, Marker, TileLayer, useMap } from 'react-leaflet';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+import { useTheme } from "@/provider";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 const MAPTILE_API_KEY = import.meta.env.VITE_MAPTILE_API_KEY;
-
 
 L.Icon.Default.mergeOptions({
 	iconUrl: markerIcon,
@@ -17,6 +17,15 @@ L.Icon.Default.mergeOptions({
 	shadowUrl: markerShadow,
 });
 
+const locationIcon = new L.Icon({
+	iconUrl: markerIcon,
+	iconRetinaUrl: markerIcon,
+	shadowUrl: markerShadow,
+	iconSize: [25, 41],
+	iconAnchor: [12, 41],
+	shadowSize: [41, 41],
+	shadowAnchor: [12, 41],
+});
 
 type Props = {
 	coords: Coords;
@@ -32,19 +41,17 @@ export default function Map({ coords, onMapClick, mapType }: Props) {
 			center={[lat, lon]}
 			zoom={5}
 			style={{
-				width: '100%',
-				height: '100%',
-			}}>
-			<MapClick
-				onMapClick={onMapClick}
-				coords={coords}
-			/>
+				width: "100%",
+				height: "100%",
+			}}
+		>
+			<MapClick onMapClick={onMapClick} coords={coords} />
 			<MapTileLayer />
 			<TileLayer
 				opacity={0.7}
 				url={`https://tile.openweathermap.org/map/${mapType}/{z}/{x}/{y}.png?appid=${API_KEY}`}
 			/>
-			<Marker position={[lat, lon]} />
+			<Marker position={[lat, lon]} icon={locationIcon} zIndexOffset={1000} />
 		</MapContainer>
 	);
 }
@@ -68,9 +75,9 @@ function MapClick({
 			onMapClick(lat, lng);
 		};
 
-		map.on('click', handler);
+		map.on("click", handler);
 		return () => {
-			map.off('click', handler);
+			map.off("click", handler);
 		};
 	}, [map, onMapClick]);
 
@@ -79,6 +86,7 @@ function MapClick({
 
 function MapTileLayer() {
 	const map = useMap();
+	const { theme } = useTheme();
 
 	useEffect(() => {
 		let activeLayer: any | null = null;
@@ -87,10 +95,10 @@ function MapTileLayer() {
 		// If no MapTiler API key is provided, fall back to OpenStreetMap tiles
 		if (!MAPTILE_API_KEY) {
 			const osm = new L.TileLayer(
-				'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+				"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
 				{
-					attribution: '© OpenStreetMap contributors',
-				},
+					attribution: "© OpenStreetMap contributors",
+				}
 			);
 			osm.addTo(map);
 			activeLayer = osm;
@@ -99,7 +107,8 @@ function MapTileLayer() {
 			};
 		}
 
-		const styleUrl = `https://api.maptiler.com/maps/basic-dark/style.json?key=${MAPTILE_API_KEY}`;
+		const styleName = theme === "dark" ? "dataviz-v4-dark" : "dataviz-v4";
+		const styleUrl = `https://api.maptiler.com/maps/${styleName}/style.json?key=${MAPTILE_API_KEY}`;
 
 		(async () => {
 			try {
@@ -114,16 +123,16 @@ function MapTileLayer() {
 				tileLayer.addTo(map);
 				activeLayer = tileLayer;
 			} catch (err: any) {
-				if (err.name === 'AbortError') return;
+				if (err.name === "AbortError") return;
 				console.warn(
-					'MapTiler style load failed, falling back to OpenStreetMap tiles',
-					err,
+					"MapTiler style load failed, falling back to OpenStreetMap tiles",
+					err
 				);
 				const osm = new L.TileLayer(
-					'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+					"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
 					{
-						attribution: '© OpenStreetMap contributors',
-					},
+						attribution: "© OpenStreetMap contributors",
+					}
 				);
 				osm.addTo(map);
 				activeLayer = osm;
@@ -136,7 +145,7 @@ function MapTileLayer() {
 				map.removeLayer(activeLayer);
 			}
 		};
-	}, [map]);
+	}, [map, theme]);
 
 	return null;
 }

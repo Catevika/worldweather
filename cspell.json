@@ -8,6 +8,7 @@
 		"/src/index.css"
 	],
 	"words": [
+		"dataviz",
 		"Geolocation",
 		"hectopascals",
 		"latlng",
@@ -18,6 +19,7 @@
 		"ntvs",
 		"openweathermap",
 		"shadcn",
+		"VITE",
 		"worldweather"
 	]
 }
