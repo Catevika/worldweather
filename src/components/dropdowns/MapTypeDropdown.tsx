@@ -15,19 +15,14 @@ type Props = {
 
 export default function MapTypeDropdown({ mapType, setMapType }: Props) {
 	return (
-		<Select
-			value={mapType}
-			onValueChange={(value) => setMapType(value)}>
-			<SelectTrigger className='w-full xs:w-[180px] capitalize'>
-				<SelectValue placeholder='Theme' />
+		<Select value={mapType} onValueChange={(value) => setMapType(value)}>
+			<SelectTrigger className="w-full xs:w-45 capitalize">
+				<SelectValue placeholder="Theme" />
 			</SelectTrigger>
-			<SelectContent className='z-1001'>
+			<SelectContent className="z-1001">
 				{mapTypes.map((mapType) => (
-					<SelectItem
-						className='capitalize'
-						key={mapType}
-						value={mapType}>
-						{mapType.split('_')[0]}
+					<SelectItem className="capitalize" key={mapType} value={mapType}>
+						{mapType.split("_")[0]}
 					</SelectItem>
 				))}
 			</SelectContent>
