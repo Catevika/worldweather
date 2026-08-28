@@ -64,14 +64,14 @@ Live demo available at [your-deployment-url]
 
 ### Installation
 
-1. Clone the repository:
+- Clone the repository
 
 ```bash
 git clone https://github.com/Catevika/worldweather.git
 cd worldweather
 ```
 
-2. Install dependencies:
+- Install dependencies
 
 ```bash
 npm install
@@ -79,13 +79,13 @@ npm install
 
 ### Environment Setup
 
-1. Create a `.env.local` file in the root directory:
+- Create a `.env.local` file in the root directory:
 
 ```bash
 cp .env.example .env.local
 ```
 
-2. Add your API credentials:
+- Add your API credentials:
 
 ```env
 VITE_API_KEY=your_openweathermap_api_key
