@@ -2,7 +2,7 @@
 
 A modern, responsive weather application built with React, TypeScript, and Vite. Get real-time weather information, hourly forecasts, daily forecasts, and air quality data with an interactive map interface.
 
-## Table of Contents
+## Table of Contents <!-- omit in toc -->
 
 - [World Weather](#world-weather)
   - [Table of Contents](#table-of-contents)
