@@ -5,7 +5,6 @@ A modern, responsive weather application built with React, TypeScript, and Vite.
 ## Table of Contents <!-- omit in TOC -->
 
 - [World Weather](#world-weather)
-  - [Table of Contents](#table-of-contents)
   - [Features](#features)
   - [Demo](#demo)
   - [Tech Stack](#tech-stack)
