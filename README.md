@@ -38,7 +38,7 @@ A modern, responsive weather application built with React, TypeScript, and Vite.
 
 ## Demo
 
-Live demo available at [your-deployment-url]
+Live demo available at [https://worldweather-one.vercel.app](https://worldweather-one.vercel.app)
 
 ## Tech Stack
 
