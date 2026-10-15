@@ -4,10 +4,9 @@
 
 A modern, responsive weather application built with React, TypeScript, and Vite. Get real-time weather information, hourly forecasts, daily forecasts, and air quality data with an interactive map interface.
 
-## Table of Contents
+## Table of Contents <!-- omit in TOC -->
 
 - [World Weather](#world-weather)
-  - [Table of Contents](#table-of-contents)
   - [Features](#features)
   - [Demo](#demo)
   - [Tech Stack](#tech-stack)
@@ -40,7 +39,7 @@ A modern, responsive weather application built with React, TypeScript, and Vite.
 
 ## Demo
 
-Live demo available at [your-deployment-url]
+Live demo available at [https://worldweather-one.vercel.app](https://worldweather-one.vercel.app)
 
 ## Tech Stack
 
